@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            let parinte = document.querySelector("body");
+            let paragraf = document.createElement("p");
+            paragraf.innerText = "Ana are ";
+            let nrMere = document.createElement("strong");
+            nrMere.innerText = "2";
+            paragraf.append(nrMere);
+            paragraf.append(document.createTextNode(" mere."));
+            //paragraf.style.backgroundColor = "silver";
+            //paragraf.style.border = "1px solid gray";
+            parinte.append(paragraf);
+
+            function incrementare(e){
+                //console.log("incrementare", e.type, e.target);
+                //console.log("pozitia", e.x, e.y);
+                let valoare = parseInt(nrMere.innerText, 10);
+                nrMere.innerText = (valoare + 1).toString();
+            }
+            function decrementare(e){
+                e.preventDefault();
+                let valoare = parseInt(nrMere.innerText, 10);
+                nrMere.innerText = (valoare - 1).toString();
+            }
+            paragraf.addEventListener("click", incrementare);
+            paragraf.addEventListener("contextmenu", decrementare);
+
+            paragraf.addEventListener("mouseenter", e =>{
+                paragraf.classList.add("selectat");
+            });
+            paragraf.addEventListener("mouseleave", e =>{
+                paragraf.classList.remove("selectat");
+            });
+        </script>
+        <style type="text/css">
+            p{
+                background-color: silver;
+                border: 1px solid gray;
+                padding: 5px;
+                font-family: Tahoma;
+            }
+            .selectat{
+                color: red;
+            }
+        </style>
+    </body>
+</html>

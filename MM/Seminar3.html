@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+        test
+        <script type="text/javascript">
+            let produs = {
+                nume:"mere",
+                pret:1.75,
+                cantitate:8
+            };
+            let produse = [                                     //ADRESA_1001
+                {nume:"pere", pret: 3, cantitate: 7},
+                {nume:"caise", pret: 8, cantitate: 1},
+            ];
+            produse.push(produs);
+            //produs.valoare = produs.pret * produs.cantitate;
+            function adaugaValoare(vector){                     //VECTOR = ADR_1001
+                for(let elem of vector){
+                    elem.valoare = elem.pret*elem.cantitate;    //ADR_1001[0].VALOARE=...
+                }
+                vector = [];    //vector=adresa_2004
+            }
+            adaugaValoare(produse); //ADRESA_1001
+            // pere (21 lei), mere (14 lei)
+
+            let rezultat = produse
+            .filter(item => item.valoare > 10)
+            .map(item => `${item.nume} (${item.valoare} lei)`)
+            .join(", ");
+
+            console.log(rezultat);
+            let nod = document.body;
+            nod.innerHTML='<h1>mirel</h1>';
+
+            let nodNou = document.createElement("h2");
+            nodNou.innerText = "un titlu mai mic";
+            nod.append(nodNou);
+
+            let nodNou2 = document.createElement("a");
+            nodNou2.href = "https://ase.ro";
+            nodNou2.innerText = "un titlu mai mic2";
+            console.log(nodNou2.attributes);
+            nod.append(nodNou2);
+        </script>
+    </body>
+</html>
