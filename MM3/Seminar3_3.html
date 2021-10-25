@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<HTML>
+    <head>
+        <meta charset="utf-8"/>
+        <title></title>
+    </head>
+    <body>
+        <ul id="lista"></ul>
+        <script type="text/javascript">
+
+            let lista = document.querySelector("#lista");
+            
+            function adauga(lista){
+            let element = document.createElement("li");
+            element.innerText = 1 + Math.floor(Math.random() * 100);
+            lista.append(element);
+
+            element.addEventListener("click", e => {e.target.remove();});
+            }
+            setInterval(adauga, 1000, lista);
+        </script>
+    </body>
+</HTML>
