@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+        let date = [
+            { "tara": "BG", "an": 2013, "pop": 11137974 },
+            { "tara": "BG", "an": 2014, "pop": 11180840 },
+            { "tara": "BG", "an": 2015, "pop": 11237274 },
+            { "tara": "BG", "an": 2016, "pop": 11311117 },
+            { "tara": "BG", "an": 2017, "pop": 11351727 },
+            { "tara": "BG", "an": 2018, "pop": 11398589 },
+            { "tara": "HU", "an": 2013, "pop": 2971905 },
+            { "tara": "HU", "an": 2014, "pop": 2943472 },
+            { "tara": "HU", "an": 2015, "pop": 2921262 },
+            { "tara": "HU", "an": 2016, "pop": 2888558 },
+            { "tara": "HU", "an": 2017, "pop": 2847904 },
+            { "tara": "HU", "an": 2018, "pop": 2808901 },
+            { "tara": "RO", "an": 2013, "pop": 10487289 },
+            { "tara": "RO", "an": 2014, "pop": 10427301 },
+            { "tara": "RO", "an": 2015, "pop": 10374822 },
+            { "tara": "RO", "an": 2016, "pop": 10341330 },
+            { "tara": "RO", "an": 2017, "pop": 10309573 },
+            { "tara": "RO", "an": 2018, "pop": 10291027 }
+        ];
+
+        function afisare(){
+            let tbody = document.querySelector('tbody');
+            tbody.innerHTML ='';
+
+            for(let element of date){
+                let rand = document.createElement('tr');
+                tbody.append(rand);
+
+                for(let numeCamp in element){
+                    let celula = document.createElement('td');
+                    celula.innerText=element[numeCamp];
+                    rand.append(celula);
+                    celula.addEventListener('click',e=>{
+                        e.target.style.backgroundColor="yellow";
+                    })
+                }
+            }
+        }
+        function aplicatie()
+        {
+            afisare();
+            // document.querySelector('td').addEventListener('click',e=>{e.target.style.backgroundColor="yellow";});
+            document.querySelector('#btnAdauga').addEventListener('click',e=>{
+                date.push({
+                "tara": document.querySelector("#tari").value,
+                "an": parseInt(document.querySelector('#ani').value,10),
+                "pop": parseInt(document.querySelector('#pop').value,10)
+            });
+            afisare();
+            });
+
+            document.querySelector('#btnSumar').addEventListener('click',e=>{
+                let rezultat ={};
+                for(let element of date){
+                    if(rezultat[element.an]){
+                        rezultat[element.an]+=element.pop;
+                    }else{
+                        rezultat[element.an]=element.pop;
+                    }
+                }
+                let v =[];
+                for(let an in rezultat){
+                    v.push({an: an, total: rezultat[an]});
+                }
+                console.log(v);
+            })
+        }
+        document.addEventListener('DOMContentLoaded', aplicatie);
+    </script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Tara</th>
+                <th>An</th>
+                <th>Populatie</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <select id="tari">
+        <option value="BG">BG</option>
+        <option value="HU">HU</option>
+        <option value="RO">RO</option>
+    </select>
+    <select id="ani">
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+    </select>
+    <input id="pop"/>
+    <input type="button" id="btnAdauga" value="Adauga"/>
+    <input type="button" id="btnSumar" value="Sumar"/>
+</body>
+</html>

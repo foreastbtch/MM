@@ -1,0 +1,106 @@
+<!--1) Să se construiască un un document HTML care conține:
+
+două elemente input de tip textbox cu id-urile nume și salariu;
+un element input de tip button;
+un element gol de tip tabel.
+2) Scrieți o funcție JavaScript care să primească ca parametru un 
+    obiect (câmpuri nume și salariu) și să adauge datele în tabel. 
+    Apelați funcția cu un obiect de test.
+
+3) Scrieți codul JavaScript care face ca la apăsarea butonului să se 
+    adauge în tabel numele și salariul citite din controalele de tip textbox. 
+    În subsolul tabelului (footer) se va afișa valoarea fondului total de salarii.
+
+4) Scrieți codul JavaScript care la click pe un rând din tabel corespunzător 
+    unei persoane crește salariul acesteia cu 100 de RON.-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        let pers1 = { "nume": "Andrei", "salariu": 1000 };
+        let date = [];
+        date.push(pers1);
+
+        function adauga(pers) {
+            let tbody = document.querySelector('tbody');
+            //tbody.innerHTML ='';
+            let rand = document.createElement('tr');
+            rand.addEventListener('click', e => {
+                //e.target.innerText = "x";
+                let x = parseInt(e.target.innerText, 10);
+                x += 100;
+                i = e.target.closest('tr').rowIndex / 2;
+
+                //console.log(e.target.closest('td').cellIndex);
+                if (e.target.closest('td').cellIndex==1) {
+                    date[i - 1].salariu = x;
+                    e.target.innerText = x.toString();
+                    adauga2(date);
+                    footer();
+                }
+
+            })
+            tbody.append(rand);
+            for (let numeCamp in pers) {
+                let celula = document.createElement('td');
+                celula.innerText = pers[numeCamp];
+                rand.append(celula);
+            }
+        }
+
+        function adauga2(persoane) {
+            let tbody = document.querySelector('tbody');
+            tbody.innerHTML = '';
+            for (let element of date) {
+                let rand = document.createElement('tr');
+                tbody.append(rand);
+                adauga(element);
+            }
+        }
+        function footer() {
+            let tbody = document.querySelector('tbody');
+            let tfoot = document.createElement('tfoot');
+            let fondTotal = 0;
+            for (let i of date) {
+                fondTotal += i.salariu;
+            }
+            //console.log(fondTotal);
+            tbody.append(tfoot);
+            tfoot.innerText = `Fond salarii: ${fondTotal}`;
+        }
+        function aplicatie() {
+            //console.log(persoane);
+            adauga2(date);
+            document.querySelector('#btnAdauga').addEventListener('click', e => {
+                date.push({
+                    "nume": document.querySelector("#nume").value,
+                    "salariu": parseInt(document.querySelector("#salariu").value)
+                });
+                adauga2(date);
+                footer();
+            });
+            //adauga(pers1);
+        }
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Nume</th>
+                <th>Salariu</th>
+            </tr>
+        <tbody>
+        </tbody>
+        </thead>
+    </table>
+    <input type="text" id="nume" name="nume" />
+    <input type="text" id="salariu" name="salariu" />
+    <input type="button" id="btnAdauga" value="Adauga" />
+</body>
+
+</html>
