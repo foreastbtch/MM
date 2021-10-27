@@ -1,0 +1,10 @@
+<!-- 1) Adăugați în documentul HTML:
+
+un tabel gol cu două coloane (judet, număr cazuri)
+un buton Total
+un element select gol
+2) Scrieți codul JavaScript care la apăsarea pe butonul Total să afișeze numărul total de cazuri folosind funcția alert.
+
+3) Scrieți codul JavaScript care la pornirea paginii să afișeze datele în tabel și să populeze elementul select cu lista de județe.
+
+4) Scrieți codul JavaScript care la selectarea unui județ din listă să adauge un paragraf nou în document cu mesajul 'Județul XY - numărul total de cazuri NNNN (NN% din cazurile la nivel național)' --> ??
