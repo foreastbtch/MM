@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        let date = [
+            { "tara": "BG", "an": 2013, "pop": 11137974 },
+            { "tara": "BG", "an": 2014, "pop": 11180840 },
+            { "tara": "BG", "an": 2015, "pop": 11237274 },
+            { "tara": "BG", "an": 2016, "pop": 11311117 },
+            { "tara": "BG", "an": 2017, "pop": 11351727 },
+            { "tara": "BG", "an": 2018, "pop": 11398589 },
+            { "tara": "HU", "an": 2013, "pop": 2971905 },
+            { "tara": "HU", "an": 2014, "pop": 2943472 },
+            { "tara": "HU", "an": 2015, "pop": 2921262 },
+            { "tara": "HU", "an": 2016, "pop": 2888558 },
+            { "tara": "HU", "an": 2017, "pop": 2847904 },
+            { "tara": "HU", "an": 2018, "pop": 2808901 },
+            { "tara": "RO", "an": 2013, "pop": 10487289 },
+            { "tara": "RO", "an": 2014, "pop": 10427301 },
+            { "tara": "RO", "an": 2015, "pop": 10374822 },
+            { "tara": "RO", "an": 2016, "pop": 10341330 },
+            { "tara": "RO", "an": 2017, "pop": 10309573 },
+            { "tara": "RO", "an": 2018, "pop": 10291027 }
+        ];
+        function adauga(tara) {
+            let tbody = document.querySelector('tbody');
+            let rand = document.createElement('tr');
+            tbody.append(rand);
+            for (let numeCamp in tara) {
+                if (numeCamp === "an" || numeCamp === "pop") {
+                    let celula = document.createElement('td');
+                    celula.innerText = tara[numeCamp];
+                    rand.append(celula);
+                }
+
+            }
+        }
+
+        function adauga2(tari) {
+            let tbody = document.querySelector('tbody');
+            tbody.innerHTML = '';
+            for (let element of tari) {
+                let rand = document.createElement('tr');
+                tbody.append(rand);
+                adauga(element);
+            }
+        }
+
+        function aplicatie() {
+            let x = { "tara": "RO", "an": 1999, "pop": 100 };
+            adauga(x);
+            document.querySelector('#BG').addEventListener('click', e => {
+                let y = date.filter(x => x.tara === "BG");
+                console.log(y);
+                adauga2(y);
+            });
+            document.querySelector('#HU').addEventListener('click', e => {
+                let y = date.filter(x => x.tara === "HU");
+                console.log(y);
+                adauga2(y);
+            });
+            document.querySelector('#RO').addEventListener('click', e => {
+                let y = date.filter(x => x.tara === "RO");
+                console.log(y);
+                adauga2(y);
+            });
+            f();
+        }
+
+        function f() {
+            let f = [];
+            for (let e of date) {
+                if (!f.includes(e.tara)) {
+                    f.push(e.tara);
+                }
+            }
+            let max = [];
+            let max1 = 0;
+            for (let i of f) {
+                for (let j of date) {
+                    if (j["tara"] === i) {
+                        if (j["pop"] > max1) {
+                            max1 = j["pop"];
+                        }
+                    }
+                }
+                console.log(max1);
+                max.push(max1);
+                max1 = 0;
+            }
+            let p = document.createElement('strong');
+            p.innerText = "Populatie maxima pe tari:";
+            let body = document.querySelector('body');
+            body.append(p);
+            for (let i = 0; i < max.length; i++) {
+                let p = document.createElement('p');
+                p.innerText = f[i] + " " + max[i];
+                body.append(p);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', aplicatie);
+    </script>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>An</th>
+                <th>Populatie</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <input type="radio" id="BG" name="BG" value="BG">
+    <label for="BG">BG</label><br>
+    <input type="radio" id="HU" name="HU" value="HU">
+    <label for="HU">HU</label><br>
+    <input type="radio" id="RO" name="RO" value="RO">
+    <label for="RO">RO</label><br>
+</body>
+
+</html>

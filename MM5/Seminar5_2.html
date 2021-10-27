@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function aplicatie() {
+            let canvas = document.querySelector('canvas');
+            let W = canvas.width, H = canvas.height;
+            let context = canvas.getContext('2d');
+
+            let cx = W / 2, cy = H / 2, r = Math.min(W, H) / 2;
+            //context.moveTo(cx, cy);
+            let n = 36, d = 2 * Math.PI / n;
+            let start = Math.PI / 2;
+            for (let i = 0; i < n; i += 2) {
+                context.beginPath();
+                context.moveTo(cx, cy);
+                // context.arc(cx, cy, r, 0, 2 * Math.PI);
+                // context.arc(cx, cy, r, Math.PI / 2, Math.PI);
+                context.fillStyle = `hsl(${i * 360 / n}, 100%, 50%`;
+                // context.arc(cx, cy, r, i * d, (i + 1) * d);
+                // context.arc(cx, cy, r, start + i * d, start + (i + 1) * d);
+                context.arc(cx, cy, r, i * d, (i + 1) * d);
+                context.fill();
+            }
+
+        }
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <canvas width="400" height="250" style="border: 1px solid black;"></canvas>
+</body>
+
+</html>

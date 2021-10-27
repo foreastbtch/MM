@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function aplicatie() {
+            let canvas = document.querySelector('canvas');
+            let W = canvas.width, H = canvas.height;
+            let context = canvas.getContext('2d');
+
+            function desenareGrafic(v) {
+                let n = v.length;
+                w = W / n;
+                // f = H / Math.max.apply(null, v);
+                f = 0.9 * H / Math.max.apply(null, v);
+
+                for (let i = 0; i < n; i++) {
+                    let wi = w * 0.8;
+                    let hi = v[i] * f;
+
+                    let xi = i * w + w * 0.1;
+                    let yi = H - hi - 0.05 * H;
+
+                    context.beginPath();
+                    context.rect(xi, yi, wi, hi);
+
+                    // context.fillStyle = "rgba(255, 0, 0, 0.3)";
+                    // context.fillStyle = "red";
+                    context.fillStyle = `hsl(${i * 360 / n}, 100%, 50%`;
+                    // context.fillStyle = `hsl(${v[i] * Math.max.apply(null, v)}, 100%, 50%`;
+                    context.fill();
+                    context.stroke();
+
+                    context.font = "bold 16pt Tahoma";
+                    context.textAlign = "center";
+                    context.textBaseline = "middle";
+                    context.fillStyle = "black";
+                    context.fillText(v[i].toString(), xi + wi / 2, yi + hi / 2);
+                }
+                // context.fillStyle = "rgba(255, 0, 0, 0.3)";
+                // context.fill();
+                // context.stroke();
+            }
+            desenareGrafic([10, 8, 4, 9, 8, 4, 9, 8, 4, 9, 8, 4, 9, 1]);
+        }
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <canvas width="400" height="250" style="border: 1px solid black;"></canvas>
+</body>
+
+</html>

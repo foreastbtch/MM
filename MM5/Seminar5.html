@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function aplicatie() {
+            let canvas = document.querySelector('canvas');
+            let W = canvas.width, H = canvas.height;
+            //console.log(W,H);
+            //canvas.height=75;
+            let context = canvas.getContext('2d');
+            context.fillStyle = "blue";
+            //console.log(context);
+            // context.fillRect(100,80,180,80);
+            context.strokeRect(100, 80, 180, 80);
+
+            context.font = "bold 16pt Tahoma";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText('Mirel', 100 + 180 / 2, 80 + 80 / 2);
+            context.fillStyle = "red";
+            context.fillRect(100 + 180 / 2, 80 + 80 / 2, 2, 2);
+
+            //context.fillStyle = "yellow";
+            context.moveTo(3 * W / 4, H / 2);
+            context.lineTo(W, H);
+            context.lineTo(W / 2, H);
+            context.closePath();
+            //context.lineTo(3 * W / 4, H / 2)
+
+            context.lineWidth = 6;
+            context.strokeStyle = "green";
+            context.fillStyle = "yellow";
+            context.fill();
+            context.stroke();
+        }
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <canvas width="400" height="250" style="border: 1px solid black;"></canvas>
+</body>
+
+</html>
