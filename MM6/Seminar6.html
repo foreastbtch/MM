@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+
+        let imagine, iW, iH;
+        let canvas, W, H, context;
+        let l = 1, c = 0;
+        let dx = 0;
+
+        function aplicatie() {
+
+            canvas = document.querySelector("canvas");
+            W = canvas.width, H = canvas.height;
+            context = canvas.getContext("2d");
+
+            imagine = document.createElement('img');
+            imagine.src = 'dragon.png';
+            // console.log("Am inceput incarcarea imaginii.");
+
+            imagine.addEventListener('load', e => {
+                setInterval(() => {
+                    c = (c + 1) % 3;
+                    dx = dx + 3;
+                    desenare();
+                }, 200);
+            });
+
+            function desenare() {
+
+                context.fillStyle = "white";
+                context.fillRect(0, 0, W, H);
+
+                iW = imagine.naturalWidth;
+                iH = imagine.naturalHeight;
+                // console.log("Imaginea a fost incarcata!", iW, iH);
+
+                let sw = iW / 3;
+                let sh = iH / 4;
+                let sx = c * sw;
+                let sy = l * sh;
+
+                // context.drawImage(imagine, 0, 0);
+                context.drawImage(imagine,
+                /*S:*/ sx, sy, sw, sh,
+                /*D:*/ dx, (H - sh / 2) / 2, sw / 2, sh / 2
+                );
+                // console.log("Am desenat imaginea.");
+            }
+            document.body.append(imagine);
+            // console.log("Sfarsit script.");
+        }
+
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <canvas width="800" height="250" style="border: 1px solid red;"></canvas>
+</body>
+
+</html>
