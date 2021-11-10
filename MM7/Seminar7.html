@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        #zona {
+            background-color: silver;
+            border: 2px solid red;
+            padding: 30px 100px;
+        }
+    </style>
+    <script type="text/javascript">
+        let imagine, canvas, W, H, context;
+        let mx = 0,
+            my = 0;
+        let startX = 0,
+            startY = 0,
+            sx = 100,
+            sy = 50,
+            sw = 200,
+            sh = 100;
+        let inMiscare = false;
+        // let listaEfecte = [];
+
+        function desenare() {
+            context.drawImage(imagine, 0, 0);
+            //for (let c of listaEfecte) {
+            //let imageData = context.getImageData(sx, sy, sw, sh);
+
+            //let v = imageData.data;
+
+            //for (let i = 0; i < v.length; i += 4) {
+            //v[i] = 200;
+            //}
+            //context.putImageData(imageData, sx, sy);
+            // }
+            context.fillText(`${mx}, ${my}`, 10, 20);
+            context.strokeRect(sx, sy, sw, sh);
+        }
+
+        function initializareCanvas() {
+            let canvas = document.createElement("canvas");
+            W = canvas.width = imagine.naturalWidth;
+            H = canvas.height = imagine.naturalHeight;
+            context = canvas.getContext("2d");
+            document.body.append(canvas);
+
+            setInterval(desenare, 30);
+
+            canvas.addEventListener("mousedown", e => {
+                inMiscare = true;
+                startX = sx = mx;
+                startY = sy = my;
+                sw = 1;
+                sh = 1;
+            });
+
+            canvas.addEventListener("mouseup", e => {
+                inMiscare = false;
+            });
+
+            document.addEventListener("mousemove", e => {
+                mx = Math.round(e.x - canvas.getBoundingClientRect().x);
+                my = Math.round(e.y - canvas.getBoundingClientRect().y);
+
+                if (inMiscare) {
+                    sx = Math.min(startX, mx);
+                    sy = Math.min(startY, my);
+                    sw = Math.abs(mx - startX);
+                    sh = Math.abs(my - startY);
+                    console.log(sx, sy, sw, sh);
+                }
+
+            });
+            document.querySelector("#btnSalvare").addEventListener("click", e => {
+                let canvasSelectie = document.createElement("canvas");
+                canvasSelectie.width = sw;
+                canvasSelectie.height = sh;
+                let contextSelectie = canvasSelectie.getContext("2d");
+                contextSelectie.drawImage(canvas,
+                    // sx,sy,sWidth,sHeight
+                    sx, sy, sw, sh,
+                    // dx,dy,dWidth,dHeight
+                    0, 0, sw, sh
+                );
+
+                let link = document.createElement('a');
+                link.download = "selectie.png";
+                link.href = canvasSelectie.toDataURL();
+                link.click();
+            });
+
+            document.querySelector("#btnEfect").addEventListener("click", e => {
+
+                //listaEfecte.push({ sx, sy, sw, sh });
+
+                let canvasImagine = document.createElement("canvas");
+                canvasImagine.width = W;
+                canvasImagine.height = H;
+                let contextImagine = canvasImagine.getContext("2d");
+                contextImagine.drawImage(imagine, 0, 0);
+
+                let imageData = contextImagine.getImageData(sx, sy, sw, sh);
+                let v = imageData.data;
+
+                for (let i = 0; i < v.length; i += 4) {
+                    v[i] = 200;
+                }
+                contextImagine.putImageData(imageData, sx, sy);
+                imagine = canvasImagine;
+            });
+        }
+
+        function incarcareImagine(fisier) {
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(fisier);
+            fileReader.addEventListener("load", e => {
+                imagine = document.createElement("img");
+                imagine.src = e.target.result;
+                imagine.addEventListener("load", e => {
+                        initializareCanvas();
+                    })
+                    // console.log(e.target.result);
+            })
+        }
+
+        function aplicatie() {
+            let zona = document.querySelector("#zona");
+            zona.addEventListener("dragover", e => {
+                e.preventDefault()
+            });
+            zona.addEventListener("drop", e => {
+                // console.log(e.dataTransfer.files);
+                e.preventDefault()
+                incarcareImagine(e.dataTransfer.files[0]);
+            });
+        }
+        document.addEventListener("DOMContentLoaded", aplicatie);
+    </script>
+</head>
+
+<body>
+    <div id="zona">Drag and Drop aici...</div>
+    <input type="button" id="btnSalvare" value="Salvare">
+    <input type="button" id="btnEfect" value="Efect">
+</body>
+
+</html>
